@@ -5,10 +5,8 @@ dotenv.config();
 import fs from "fs";
 import path from "path";
 import { Client, Collection, Events, GatewayIntentBits } from "discord.js";
-import { GPTController } from "./gpt.js";
 
 // Creating instances
-const gpt = new GPTController();
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 client.commands = new Collection();
 
