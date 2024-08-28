@@ -46,7 +46,11 @@ async function deployCommands() {
     console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
     // The put method is used to fully refresh all commands in the guild with the current set
-    const data = await rest.put(Routes.applicationGuildCommands(process.env.bot_client_id, process.env.guild_id), { body: commands });
+    const data = await rest.put(
+      // Routes.applicationGuildCommands(process.env.bot_client_id, process.env.guild_id),
+      Routes.applicationCommands(process.env.bot_client_id),
+      { body: commands }
+    );
 
     console.log(`Successfully reloaded ${data.length} application (/) commands.`);
   } catch (error) {

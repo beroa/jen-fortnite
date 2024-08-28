@@ -13,16 +13,36 @@ import { SlashCommandBuilder } from "discord.js";
 export const command = {
   data: new SlashCommandBuilder().setName("john").setDescription("tell them why that's bullshit"),
   async execute(interaction) {
-    await interaction.reply(`${prefix[Math.floor(Math.random() * prefix.length)]}${johns[Math.floor(Math.random() * johns.length)]}`);
+    let prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+    const john = johns[Math.floor(Math.random() * johns.length)];
+    const suffix = Math.random() < 0.1 ? suffixes[Math.floor(Math.random() * suffixes.length)] : "";
+
+    let critical_hit = Math.random() < 0.1;
+
+    if (critical_hit) {
+      prefix = rage_prefixes[Math.floor(Math.random() * rage_prefixes.length)];
+    }
+
+    let response = `${prefix}${john}${suffix}`;
+
+    if (critical_hit) {
+      response = response.toUpperCase();
+      // add three characters to the end of the string, each has a 50-50 between ! and 1
+      for (let i = 0; i < Math.floor(Math.random() * 5); i++) {
+        response += ["1", "!"][ Math.floor(.25 + Math.random() * 1.75)];
+      }
+    }
+
+    await interaction.reply(response);
   },
 };
 
-const prefix = [
-  "that was bullshit, ",
-  "you suck, ",
-  "fuck you, ",
+const rage_prefixes = ["that was bullshit, ", "you suck, ", "fuck you, "];
+const prefixes = [
+  ...rage_prefixes,
   "bad games, ",
   "you only won because ",
+  "i only lost because ",
   "not gonna lie, ",
   "low-key though, ",
   "to be fair, ",
@@ -30,13 +50,14 @@ const prefix = [
   "",
 ];
 
+const suffixes = [" ffs", " dumbass"];
+
 const johns = [
   "my controller's broken",
   "the tv has lag",
   "i wasn't even trying",
   "i didn't get a chance to warm up",
   "the sun was in my eyes",
-  "my hands are cold",
   "i wasn't paying attention",
   "i had a headache",
   "you got lucky",
