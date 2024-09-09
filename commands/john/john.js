@@ -29,7 +29,7 @@ export const command = {
       response = response.toUpperCase();
       // add three characters to the end of the string, each has a 50-50 between ! and 1
       for (let i = 0; i < Math.floor(Math.random() * 5); i++) {
-        response += ["1", "!"][ Math.floor(.25 + Math.random() * 1.75)];
+        response += ["1", "!"][Math.floor(0.25 + Math.random() * 1.75)];
       }
     }
 
@@ -47,6 +47,7 @@ const prefixes = [
   "low-key though, ",
   "to be fair, ",
   "come on, ",
+  "you only 3-0'd me because ",
   "",
 ];
 
@@ -68,7 +69,7 @@ const johns = [
   "you're using a cheap character",
   "i just wasn't in the mood to play",
   "you've been practicing more than me",
-  "the chair was uncomfortable",
+  "that chair was uncomfortable",
   "i'm out of practice",
   "i didn't get enough sleep",
   "i just forgot to eat breakfast",
@@ -205,9 +206,14 @@ const johns = [
   "nobody cares about this dumbass kids game",
   "a section of my nervous system shut down",
   "i got 0-death'd that last stock",
+  "i woke up with a sore throat this morning",
+  "you're keeping an industrial strength magnet in your pocket to mess with my phob",
 
-  "my vape died",
+  "my vape was dead",
   "i hit my pen too much",
   "i couldn't stop thinking about the one who got away",
-  "my vape died i hit my pen too much and i couldn't stop thinking about the one who got away",
+  "my vape was dead i hit my pen too much and i couldn't stop thinking about the one who got away",
+
+  "billy was yelling in my ear",
+  "the vibes were all off",
 ];
