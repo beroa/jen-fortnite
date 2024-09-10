@@ -1,10 +1,10 @@
 import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
-import { add_to_event, get_event, get_recent_event_id, update_event_message } from "./db_events.js";
+import { add_to_event, get_event, get_latest_channel_event, update_event_message } from "./db_events.js";
 
 export const command = {
   data: new SlashCommandBuilder().setName("regup").setDescription("regup"),
   async execute(interaction) {
-    const recent_event_id = get_recent_event_id(interaction.channelId);
+    const recent_event_id = get_latest_channel_event(interaction.channelId);
     const channel = interaction.channel;
 
     try {

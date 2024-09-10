@@ -3,15 +3,15 @@ import { EmbedBuilder } from "discord.js";
 const events = new Map();
 const recentMessageIds = new Map();
 
-export const get_recent_event_id = (channel_id) => recentMessageIds.get(channel_id);
-export const set_recent_message_id = (channel_id, message_id) => {
+export const get_latest_channel_event = (channel_id) => recentMessageIds.get(channel_id);
+export const set_latest_channel_event = (channel_id, message_id) => {
   recentMessageIds.set(channel_id, message_id);
 };
 
 export const get_event = (message_id) => {
-  console.log("events", events);
   return events.get(message_id);
 };
+
 export const set_event = (message_id, channel_id) => {
   events.set(message_id, {
     channel_id,
@@ -23,8 +23,6 @@ export const set_event = (message_id, channel_id) => {
     const oldest_event = events.keys().next().value;
     events.delete(oldest_event);
   }
-
-  console.log("events", events);
 };
 
 // Function to add a user to the attending list or waitlist
