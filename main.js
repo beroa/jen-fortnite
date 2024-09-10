@@ -4,10 +4,13 @@ dotenv.config();
 
 import fs from "fs";
 import path from "path";
-import { Client, Collection, Events, GatewayIntentBits } from "discord.js";
+import { Client, Collection, Events, GatewayIntentBits, Partials } from "discord.js";
 
 // Creating instances
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMessageReactions],
+  partials: [Partials.Message, Partials.Reaction, Partials.User], // Required for handling uncached messages and reactions
+});
 client.commands = new Collection();
 
 // Setting up directories
@@ -19,7 +22,7 @@ const commandFolders = fs.readdirSync(foldersPath);
 async function loadCommands() {
   for (const folder of commandFolders) {
     const commandsPath = path.join(foldersPath, folder);
-    const commandFiles = fs.readdirSync(commandsPath).filter((file) => file.endsWith(".js"));
+    const commandFiles = fs.readdirSync(commandsPath).filter((file) => file.endsWith(".js") && !file.startsWith("db"));
 
     for (const file of commandFiles) {
       try {
@@ -50,12 +53,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
   }
 
   try {
-    // Conditional execution based on command name
-    if (interaction.commandName === "imfree") {
-      await command.execute(interaction, gpt);
-    } else {
-      await command.execute(interaction);
-    }
+    await command.execute(interaction, client);
   } catch (error) {
     console.error(error);
     if (interaction.replied || interaction.deferred) {

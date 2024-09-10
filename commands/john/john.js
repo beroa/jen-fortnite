@@ -1,15 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
 
-// export const command = {
-//   data: new SlashCommandBuilder()
-//     .setName("john")
-//     .setDescription("generate a john")
-//     .addStringOption((option) =>
-//       option.setName("schedule").setDescription("describe your availability in natural language").setRequired(true)
-//     ),
-//   async execute(interaction, gpt) {},
-// };
-
 export const command = {
   data: new SlashCommandBuilder().setName("john").setDescription("tell them why that's bullshit"),
   async execute(interaction) {
