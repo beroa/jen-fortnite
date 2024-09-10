@@ -31,8 +31,10 @@ export const add_to_event = (message_id, username, attend_limit = 14) => {
   if (!event) return null;
 
   // Check if the user is already in the attending list or waitlist
-  if (event.attending_list.includes(username) || event.waitlist.includes(username)) {
+  if (event.attending_list.includes(username)) {
     return { status: "already_registered" };
+  } else if (event.waitlist.includes(username)) {
+    return { status: "already_waitlisted" };
   }
 
   if (event.attending_list.length < attend_limit) {

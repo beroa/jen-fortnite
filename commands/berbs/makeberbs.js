@@ -8,7 +8,7 @@ export const command = {
   data: new SlashCommandBuilder()
     .setName("makeberbs")
     .setDescription("generate signup for berbs")
-    .addStringOption((option) => option.setName("imgur").setDescription("Imgur URL for the event image")),
+    .addStringOption((option) => option.setName("img").setDescription("the thumbnail for the event").setRequired(true)),
 
   async execute(interaction, client) {
     if (!is_authorized(interaction.user.id, AUTHORIZED_USER_IDS)) {

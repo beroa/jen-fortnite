@@ -38,6 +38,13 @@ export const command = {
         await interaction.reply({ content: "gotchu", ephemeral: true });
       } else if (result.status === "waitlist") {
         await interaction.reply({ content: "its full dawg, added you to waitlist", ephemeral: true });
+      } else if (result.status === "already_registered") {
+        await interaction.reply({ content: "you're already in the event, silly", ephemeral: true });
+      } else if (result.status === "already_waitlisted") {
+        await interaction.reply({
+          content: "you're already in the waitlist, be patient, and be careful not unreg and lose your spot",
+          ephemeral: true,
+        });
       }
 
       const embed = recent_event_message.embeds[0];
