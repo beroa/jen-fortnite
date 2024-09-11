@@ -17,8 +17,8 @@ export const command = {
     }
 
     const title = generate_event_title();
-    const imgur = interaction.options.getString("imgur");
-    const event_message = await create_event_message(interaction, title, imgur);
+    const img = interaction.options.getString("img");
+    const event_message = await create_event_message(interaction, title, img);
 
     await add_reactions(event_message);
 
@@ -34,15 +34,15 @@ const is_authorized = (user_id, authorized_ids) => authorized_ids.includes(user_
 
 const generate_event_title = () => `berbs #${100 + Math.floor(Math.random() * 200)}`;
 
-const create_event_message = async (interaction, title, imgur) => {
+const create_event_message = async (interaction, title, img) => {
   const embed = new EmbedBuilder()
     .setColor(0x00ff00)
     .setTitle(title)
     .setDescription("\nbracket start: 7:30pm\ncome after: 6:00pm\n\nif you don't reg and we hit cap i reserve the right to kick you out into the yard with jade\n🟢 Attending | 🔴 Not Attending")
     .addFields({ name: "Current Attendees:", value: "None" }, { name: "Spots Filled:", value: `0/${ATTEND_LIMIT}` });
 
-  if (imgur) {
-    embed.setThumbnail(imgur);
+  if (img) {
+    embed.setThumbnail(img);
   }
 
   return await interaction.reply({ embeds: [embed], fetchReply: true });
