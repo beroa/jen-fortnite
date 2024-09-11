@@ -40,7 +40,7 @@ const create_event_message = async (interaction, title, imgur) => {
   const embed = new EmbedBuilder()
     .setColor(0x00ff00)
     .setTitle(title)
-    .setDescription("React to RSVP!\nBracket Start:  \n🟢 Attending | 🔴 Not Attending")
+    .setDescription("\nbracket start: 7:30pm\ncome after: 6:00pm\nif you don't reg and we hit cap i reserve the right to kick you out into the yard with jade\n🟢 Attending | 🔴 Not Attending")
     .addFields({ name: "Current Attendees:", value: "None" }, { name: "Spots Filled:", value: `0/${ATTEND_LIMIT}` });
 
   if (imgur) {
