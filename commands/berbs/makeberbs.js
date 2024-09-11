@@ -20,8 +20,6 @@ export const command = {
     const imgur = interaction.options.getString("imgur");
     const event_message = await create_event_message(interaction, title, imgur);
 
-    console.log("event_message", event_message);
-
     await add_reactions(event_message);
 
     set_event(event_message.id, interaction.channelId);
@@ -40,7 +38,7 @@ const create_event_message = async (interaction, title, imgur) => {
   const embed = new EmbedBuilder()
     .setColor(0x00ff00)
     .setTitle(title)
-    .setDescription("\nbracket start: 7:30pm\ncome after: 6:00pm\nif you don't reg and we hit cap i reserve the right to kick you out into the yard with jade\n🟢 Attending | 🔴 Not Attending")
+    .setDescription("\nbracket start: 7:30pm\ncome after: 6:00pm\n\nif you don't reg and we hit cap i reserve the right to kick you out into the yard with jade\n🟢 Attending | 🔴 Not Attending")
     .addFields({ name: "Current Attendees:", value: "None" }, { name: "Spots Filled:", value: `0/${ATTEND_LIMIT}` });
 
   if (imgur) {
@@ -91,7 +89,7 @@ const handle_reaction_remove = async (reaction, user, message_id) => {
   const embed = reaction.message.embeds[0];
 
   if (reaction.emoji.name === "🟢") {
-    remove_from_event(message_id, user.id);
+    remove_from_event(message_id, user.username);
   }
 
   await update_event_message(reaction.message, embed, message_id);
