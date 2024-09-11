@@ -203,7 +203,8 @@ const johns = [
   "i hit my pen too much",
   "i couldn't stop thinking about the one who got away",
   "my vape was dead i hit my pen too much and i couldn't stop thinking about the one who got away",
-
   "billy was yelling in my ear",
+
   "the vibes were all off",
+  "my brain just stop my controller feel weird and like and i can't even move correctly",
 ];

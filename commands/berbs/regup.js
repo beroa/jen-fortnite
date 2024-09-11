@@ -9,7 +9,6 @@ export const command = {
 
     try {
       const recent_event_message = await channel.messages.fetch(recent_event_id);
-      console.log("recent_event_message", recent_event_message);
 
       if (!recent_event_message) {
         await interaction.reply({ content: "i dunno what event you're talking about. try using reactions on it?", ephemeral: true });
@@ -33,16 +32,16 @@ export const command = {
         await interaction.reply({ content: "i can't access that event. try using reactions on it? might be borked", ephemeral: true });
         return;
       }
-
+      const eventLink = `https://discord.com/channels/${interaction.guildId}/${interaction.channelId}/${recent_event_id}`;
       if (result.status === "attending") {
-        await interaction.reply({ content: "gotchu", ephemeral: true });
+        await interaction.reply({ content: `gotchu. [Event Link](${eventLink})`, ephemeral: true });
       } else if (result.status === "waitlist") {
-        await interaction.reply({ content: "its full dawg, added you to waitlist", ephemeral: true });
+        await interaction.reply({ content: `its full dawg, added you to waitlist. [Event Link](${eventLink})`, ephemeral: true });
       } else if (result.status === "already_registered") {
-        await interaction.reply({ content: "you're already registered", ephemeral: true });
+        await interaction.reply({ content: `you're already registered. [Event Link](${eventLink})`, ephemeral: true });
       } else if (result.status === "already_waitlisted") {
         await interaction.reply({
-          content: "you're already in the waitlist, be patient, and be careful not unreg and lose your spot",
+          content: `you're already in the waitlist, be patient, and be careful not unreg and lose your spot. [Event Link](${eventLink})`,
           ephemeral: true,
         });
       }
