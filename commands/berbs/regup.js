@@ -21,7 +21,7 @@ export const command = {
         (r) => r.emoji.name === "🔴" && r.users.cache.has(interaction.user.id)
       );
       if (deniedReaction) {
-        await interaction.reply({ content: "FAIL! you put 🔴 on the event, go remove that before I add you", ephemeral: true });
+        await interaction.reply({ content: "nice try, you put 🔴 on the event, go remove that before I add you", ephemeral: true });
         return;
       }
 
@@ -30,7 +30,7 @@ export const command = {
       console.log("result", result);
 
       if (!result) {
-        await interaction.reply({ content: "i can't access that event. try using reactions on it?", ephemeral: true });
+        await interaction.reply({ content: "i can't access that event. try using reactions on it? might be borked", ephemeral: true });
         return;
       }
 
@@ -39,7 +39,7 @@ export const command = {
       } else if (result.status === "waitlist") {
         await interaction.reply({ content: "its full dawg, added you to waitlist", ephemeral: true });
       } else if (result.status === "already_registered") {
-        await interaction.reply({ content: "you're already in the event, silly", ephemeral: true });
+        await interaction.reply({ content: "you're already registered", ephemeral: true });
       } else if (result.status === "already_waitlisted") {
         await interaction.reply({
           content: "you're already in the waitlist, be patient, and be careful not unreg and lose your spot",
