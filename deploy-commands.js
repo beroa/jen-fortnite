@@ -63,12 +63,12 @@ async function deploy_commands() {
     console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
     // Deploy global commands
-    // const data = await rest.put(Routes.applicationCommands(process.env.bot_client_id), { body: commands });
+    const data = await rest.put(Routes.applicationCommands(process.env.bot_client_id), { body: commands });
 
     // Optionally deploy to specific guilds
-    const guild_data = await rest.put(Routes.applicationGuildCommands(process.env.bot_client_id, process.env.guild_id), { body: commands });
+    const guild_data = null // await rest.put(Routes.applicationGuildCommands(process.env.bot_client_id, process.env.guild_id), { body: commands });
 
-    console.log(`Successfully reloaded ${data.length} global commands and ${guild_data.length} guild commands.`);
+    console.log(`Successfully reloaded ${data?.length} global commands and ${guild_data?.length} guild commands.`);
   } catch (error) {
     console.error("Error deploying commands:", error);
   }
