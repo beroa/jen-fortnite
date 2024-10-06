@@ -26,7 +26,7 @@ export const set_event = (message_id, channel_id) => {
 };
 
 // Function to add a user to the attending list or waitlist
-export const add_to_event = (message_id, username, attend_limit = 14) => {
+export const add_to_event = (message_id, username, attend_limit = 1) => {
   const event = events.get(message_id);
   if (!event) return null;
 
@@ -59,7 +59,7 @@ export const remove_from_event = (message_id, username) => {
 };
 
 // function to update the embed for the event
-export const update_event_message = async (message, embed, message_id, attend_limit = 14) => {
+export const update_event_message = async (message, embed, message_id, attend_limit = 1) => {
   const event = events.get(message_id);
   if (!event) return;
 
