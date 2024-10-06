@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
 import { get_event, set_event, add_to_event, remove_from_event, set_latest_channel_event, update_event_message } from "./db_events.js";
 
-const ATTEND_LIMIT = 14;
+const ATTEND_LIMIT = 1;
 const AUTHORIZED_USER_IDS = [process.env.user_id];
 
 export const command = {
