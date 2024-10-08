@@ -1,5 +1,7 @@
 import { EmbedBuilder } from "discord.js";
 
+export const ATTEND_LIMIT = 14;
+
 const events = new Map();
 const recentMessageIds = new Map();
 
@@ -26,40 +28,50 @@ export const set_event = (message_id, channel_id) => {
 };
 
 // Function to add a user to the attending list or waitlist
-export const add_to_event = (message_id, username, attend_limit = 14) => {
+export const add_to_event = (message_id, user) => {
   const event = events.get(message_id);
   if (!event) return null;
 
   // Check if the user is already in the attending list or waitlist
-  if (event.attending_list.includes(username)) {
+  if (event.attending_list.includes(user)) {
     return { status: "already_registered" };
-  } else if (event.waitlist.includes(username)) {
+  } else if (event.waitlist.includes(user)) {
     return { status: "already_waitlisted" };
   }
 
-  if (event.attending_list.length < attend_limit) {
-    // Add to attending list if the cap is not reached
-    event.attending_list.push(username);
+  if (event.attending_list.length < ATTEND_LIMIT) {
+    event.attending_list.push(user);
     return { status: "attending" };
   } else {
-    // Add to waitlist if the cap is reached
-    event.waitlist.push(username);
+    event.waitlist.push(user);
     return { status: "waitlist" };
   }
 };
 
 // Function to remove a user from the attending list or waitlist
-export const remove_from_event = (message_id, username) => {
+export const remove_from_event = (message_id, user) => {
   const event = events.get(message_id);
   if (!event) return null;
 
-  event.attending_list = event.attending_list.filter((name) => name !== username);
-  event.waitlist = event.waitlist.filter((name) => name !== username);
-  return { status: "removed" };
+  let waitlist_invite = null;
+
+  event.attending_list = event.attending_list.filter((u) => u.id !== user.id);
+  event.waitlist = event.waitlist.filter((u) => u.id !== user.id);
+
+  if (event.attending_list.length < ATTEND_LIMIT) {
+    // Move the first user from the waitlist to the attending list
+    const first_waitlisted = event.waitlist.shift();
+    if (first_waitlisted) {
+      event.attending_list.push(first_waitlisted);
+      waitlist_invite = first_waitlisted;
+    }
+  }
+
+  return waitlist_invite;
 };
 
 // function to update the embed for the event
-export const update_event_message = async (message, embed, message_id, attend_limit = 14) => {
+export const update_event_message = async (message, embed, message_id) => {
   const event = events.get(message_id);
   if (!event) return;
 
@@ -68,18 +80,18 @@ export const update_event_message = async (message, embed, message_id, attend_li
   const fields = [
     {
       name: "Current Attendees:",
-      value: attending_list.length > 0 ? attending_list.join(", ") : "None",
+      value: attending_list.length > 0 ? attending_list.map((s) => s.username).join(", ") : "None",
     },
     {
       name: "Spots Filled:",
-      value: `${attending_list.length}/${attend_limit}`,
+      value: `${attending_list.length}/${ATTEND_LIMIT}`,
     },
   ];
 
   if (waitlist.length > 0) {
     fields.push({
       name: "Waitlist:",
-      value: waitlist.map((user, index) => `${index + 1}. ${user}`).join("\n"),
+      value: waitlist.map((user, index) => `${index + 1}. ${user.username}`).join("\n"),
     });
   }
 

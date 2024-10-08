@@ -1,7 +1,14 @@
 import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
-import { get_event, set_event, add_to_event, remove_from_event, set_latest_channel_event, update_event_message } from "./db_events.js";
+import {
+  get_event,
+  set_event,
+  add_to_event,
+  remove_from_event,
+  set_latest_channel_event,
+  update_event_message,
+  ATTEND_LIMIT,
+} from "./db_events.js";
 
-const ATTEND_LIMIT = 14;
 const AUTHORIZED_USER_IDS = [process.env.user_id];
 
 export const command = {
@@ -38,7 +45,9 @@ const create_event_message = async (interaction, title, img) => {
   const embed = new EmbedBuilder()
     .setColor(0x00ff00)
     .setTitle(title)
-    .setDescription("\nbracket start: 7:30pm\ncome after: 6:00pm\n\nif you don't reg and we hit cap i reserve the right to kick you out into the yard with jade\n🟢 Attending | 🔴 Not Attending")
+    .setDescription(
+      "\nbracket start: 7:30pm\ncome after: 6:00pm\n\nif you don't reg and we hit cap i reserve the right to kick you out into the yard with jade\n🟢 Attending | 🔴 Not Attending"
+    )
     .addFields({ name: "Current Attendees:", value: "None" }, { name: "Spots Filled:", value: `0/${ATTEND_LIMIT}` });
 
   if (img) {
@@ -72,9 +81,12 @@ const handle_reaction_add = async (reaction, user, message_id) => {
   }
 
   if (reaction.emoji.name === "🟢") {
-    add_to_event(message_id, user.username, ATTEND_LIMIT);
+    add_to_event(message_id, user, ATTEND_LIMIT);
   } else if (reaction.emoji.name === "🔴") {
-    remove_from_event(message_id, user.username);
+    let waitlist_invite = remove_from_event(message_id, user);
+    if (waitlist_invite) {
+      waitlist_invite.send(`a spot opened up. you're added to berbs! 🎉`);
+    }
   }
 
   await update_event_message(reaction.message, embed, message_id);
@@ -89,7 +101,10 @@ const handle_reaction_remove = async (reaction, user, message_id) => {
   const embed = reaction.message.embeds[0];
 
   if (reaction.emoji.name === "🟢") {
-    remove_from_event(message_id, user.username);
+    let waitlist_invite = remove_from_event(message_id, user);
+    if (waitlist_invite) {
+      waitlist_invite.send(`a spot opened up. you're added to berbs! 🎉`);
+    }
   }
 
   await update_event_message(reaction.message, embed, message_id);

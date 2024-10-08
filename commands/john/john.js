@@ -207,4 +207,6 @@ const johns = [
 
   "the vibes were all off",
   "my brain just stop my controller feel weird and like and i can't even move correctly",
+
+  "my mom made me shower today i am powerless"
 ];
