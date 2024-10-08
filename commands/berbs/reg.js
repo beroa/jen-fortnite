@@ -1,5 +1,5 @@
-import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
-import { add_to_event, get_event, get_latest_channel_event, update_event_message } from "./db_events.js";
+import { SlashCommandBuilder } from "discord.js";
+import { add_to_event, get_latest_channel_event, update_event_message, ATTEND_LIMIT } from "./db_events.js";
 
 export const command = {
   data: new SlashCommandBuilder().setName("reg").setDescription("reg"),
@@ -24,9 +24,7 @@ export const command = {
         return;
       }
 
-      const ATTEND_LIMIT = 14;
-      const result = add_to_event(recent_event_id, interaction.user.username, ATTEND_LIMIT);
-      console.log("result", result);
+      const result = add_to_event(recent_event_id, interaction.user, ATTEND_LIMIT);
 
       if (!result) {
         await interaction.reply({ content: "i can't access that event. try using reactions on it? might be borked", ephemeral: true });
@@ -41,7 +39,7 @@ export const command = {
         await interaction.reply({ content: `you're already registered. [Event Link](${eventLink})`, ephemeral: true });
       } else if (result.status === "already_waitlisted") {
         await interaction.reply({
-          content: `you're already in the waitlist, be patient, and be careful not unreg and lose your spot. [Event Link](${eventLink})`,
+          content: `you're already in the waitlist, be patient, and be careful not to unreg and lose your spot. [Event Link](${eventLink})`,
           ephemeral: true,
         });
       }
