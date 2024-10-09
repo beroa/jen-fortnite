@@ -51,7 +51,7 @@ const create_event_message = async (interaction, title, img) => {
     .addFields({ name: "Current Attendees:", value: "None" }, { name: "Spots Filled:", value: `0/${ATTEND_LIMIT}` });
 
   if (img) {
-    embed.setThumbnail(img);
+    embed.setImage(img);
   }
 
   return await interaction.reply({ embeds: [embed], fetchReply: true });
