@@ -9,7 +9,7 @@ import {
   ATTEND_LIMIT,
 } from "./db_events.js";
 
-const AUTHORIZED_USER_IDS = [107298762174541824n, 325463238043238402n];
+const AUTHORIZED_USER_IDS = ['107298762174541824', '325463238043238402'];
 
 export const command = {
   data: new SlashCommandBuilder()
