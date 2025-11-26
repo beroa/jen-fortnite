@@ -17,9 +17,9 @@ export const command = {
 
     if (critical_hit) {
       response = response.toUpperCase();
-      // add three characters to the end of the string, each has a 50-50 between ! and 1
+      // add some characters to the end of the string
       for (let i = 0; i < Math.floor(Math.random() * 5); i++) {
-        response += ["1", "!"][Math.floor(0.25 + Math.random() * 1.75)];
+        response += ["!", "1"][Math.random() < .7 ? 0 : 1];
       }
     }
 
@@ -44,6 +44,7 @@ const prefixes = [
 const suffixes = [" ffs", " dumbass"];
 
 const johns = [
+  // ai
   "my controller's broken",
   "the tv has lag",
   "i wasn't even trying",
@@ -98,7 +99,6 @@ const johns = [
   "you play all the time",
   "the game is rigged",
   "the chair was squaking every time i moved",
-
   "my dog gave me the sad eyes mid-match",
   "the ghost of my gamecube was haunting me",
   "the wifi waves messed up my brainwaves",
@@ -121,6 +121,7 @@ const johns = [
   "i had an out-of-body experience mid-match",
   "i was conducting a psychological experiment on myself",
 
+  // reddit
   "you know i can't grab well after dinner",
   "you cant expect me to beat falco on the anniversary of pearl harbor",
   "the window was open",
@@ -198,15 +199,15 @@ const johns = [
   "i got 0-death'd that last stock",
   "i woke up with a sore throat this morning",
   "you're keeping an industrial strength magnet in your pocket to mess with my phob",
+  "my brain just stop my controller feel weird and like and i can't even move correctly",
 
+
+  // bois / self
   "my vape was dead",
   "i hit my pen too much",
   "i couldn't stop thinking about the one who got away",
   "my vape was dead i hit my pen too much and i couldn't stop thinking about the one who got away",
   "billy was yelling in my ear",
-
   "the vibes were all off",
-  "my brain just stop my controller feel weird and like and i can't even move correctly",
-
   "my mom made me shower today i am powerless"
 ];
