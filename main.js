@@ -6,12 +6,19 @@ import fs from "fs";
 import path from "path";
 import { Client, Collection, Events, GatewayIntentBits, Partials } from "discord.js";
 
+// Anthony booing file
+import booing from "./event/booing.js";
+
+
 // Creating instances
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMessageReactions],
   partials: [Partials.Message, Partials.Reaction, Partials.User], // Required for handling uncached messages and reactions
 });
 client.commands = new Collection();
+
+// Anthony event emitter for booing
+client.on(Events.MessageCreate, booing);
 
 // Setting up directories
 const dirname = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Za-z]:\/)/, "$1");
