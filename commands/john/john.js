@@ -189,7 +189,7 @@ const johns = [
   "i thought we were gonna be playing FIFA",
   "you were breathing too loudly",
   "my fingers weren't working right",
-  "why did the game do side b when i pressed up b?!?",
+  "the game did side b when i pressed up b?!?",
   "my hands were cold",
   "i was just nervous",
   "the game stole my jump",
