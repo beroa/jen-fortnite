@@ -23,7 +23,7 @@ export default async function (message) {
             // very funny infinite loop:   if (message.author.bot) {}
             if (message.author.id === '283482064789962752' && Math.floor(Math.random() * 150) === 0) {
                     // roll a dice, send random indx from aBoo as a response if dice === 0
-                await message.reply(aBoo[Math.floor(Math.random() * 11)]);
+                await message.reply(aBoo[Math.floor(Math.random() * aBoo.length)]);
                 }
             }
         };
