@@ -8,6 +8,9 @@ import { Client, Collection, Events, GatewayIntentBits, Partials } from "discord
 
 // Anthony booing file
 import booing from "./event/booing.js";
+// Anthony msg scheduler
+import { scheduler } from "./scheduler/schedulerMain.js";
+
 
 
 // Creating instances
@@ -77,6 +80,9 @@ client.once(Events.ClientReady, () => {
   // Load commands after the client is ready
   loadCommands().then(() => console.log("Commands loaded successfully."));
 });
+
+// Anthony, starts cron.schedule
+scheduler(client);
 
 // Log in to Discord
 client.login(process.env.bot_token);

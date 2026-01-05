@@ -5,7 +5,9 @@
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "node deploy-commands.js",
+    "start": "npm run deploy && node main.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +16,8 @@
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.1",
     "embed-table": "^4.2.3",
+    "node-cron": "^4.2.1",
+    "node-schedule": "^2.1.1",
     "nodemon": "^3.0.3",
     "openai": "^4.26.0"
   }
