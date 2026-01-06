@@ -8,7 +8,7 @@ export function scheduler(client) {
     for (let post of testInfo){
         // check if its been scheduled already
         if (post.loaded === true) return;
-        
+
         cron.schedule(post.datetime, async () =>{
             try {
 
@@ -64,9 +64,9 @@ console.log(`[schedulerMain] posts scheduled`)
 // 
 // way to schedule jobs w/o restarting bot (slash command)
 // if missing key/value, bot crashes/ fails to start
+// make it so bot doesnt need msg or img .... dont default to null :(
 
 
 
 // DONE
 // 
-// make it so bot doesnt need msg or img DEFAULT TO NULL

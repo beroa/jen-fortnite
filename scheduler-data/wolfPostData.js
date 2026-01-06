@@ -98,3 +98,4 @@ export let testInfo =  [
 ];
 
 // error in 3 and 7 -- both empty msg err
+// replaced with null --- now sends "null" as a msg :(
