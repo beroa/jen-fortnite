@@ -6,6 +6,8 @@ import { testInfo } from "../scheduler-data/wolfPostData.js";
 // function for scheduling posts
 export function scheduler(client) {
     for (let post of testInfo){
+        // check if its been scheduled already
+        if (post.loaded === true) return;
         
         cron.schedule(post.datetime, async () =>{
             try {
@@ -18,24 +20,35 @@ export function scheduler(client) {
                 //  it'll crash
                 if (!channel?.isTextBased()) return;
 
+                // checking if img to send
+                // not w others so it sends above text (looks better)
+                if (post.img){
                 await channel.send({
                     files: post.img?.trim() ? [new AttachmentBuilder(post.img)]: [],
                 })
+                };
+
+                 // checking if msg or ping to send
+
                 await channel.send({
-                    content: post.ping?.trim() ? `${post.msg} ${post.ping}`: post.msg || ""
+                    content: post.ping?.trim() ? `${post.msg} ${post.ping}`: `${post.msg}`
                 })
+                // };
 
                 console.log(`[schedulerMain] sent msg for post ID: ${post.id}`)
                          
             } catch (err){
                 console.error(`[schedulerMain] scheduled post failed for post ID: ${post.id}, ${err}`);
             }
+    post.loaded = true;
+
         // cron timer in this timezone
         },{ timezone: "America/New_York" })
     }
 };
 
-console.log("schedulerMain imported")
+console.log(`[schedulerMain] posts scheduled`)
+
 
 
 
@@ -44,3 +57,16 @@ console.log("schedulerMain imported")
 // cron is better for recurring jobs and has an easier time w timezones
 
 // currently no fallback if the server crashes when the job is scheduled.
+
+
+
+// TODO:
+// 
+// way to schedule jobs w/o restarting bot (slash command)
+// if missing key/value, bot crashes/ fails to start
+
+
+
+// DONE
+// 
+// make it so bot doesnt need msg or img DEFAULT TO NULL
