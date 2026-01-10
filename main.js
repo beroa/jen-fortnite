@@ -5,11 +5,11 @@ dotenv.config();
 import fs from "fs";
 import path from "path";
 import { Client, Collection, Events, GatewayIntentBits, Partials } from "discord.js";
+import { createSchedule } from "./scheduler/createSchedule.js";
 
 // Anthony booing file
 import booing from "./event/booing.js";
-// Anthony msg scheduler
-import { scheduler } from "./scheduler/schedulerMain.js";
+// Anthony scheduler
 
 
 
@@ -22,6 +22,9 @@ client.commands = new Collection();
 
 // Anthony event emitter for booing
 client.on(Events.MessageCreate, booing);
+
+// starts the post scheduler
+createSchedule(client);
 
 // Setting up directories
 const dirname = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Za-z]:\/)/, "$1");
@@ -80,9 +83,6 @@ client.once(Events.ClientReady, () => {
   // Load commands after the client is ready
   loadCommands().then(() => console.log("Commands loaded successfully."));
 });
-
-// Anthony, starts cron.schedule
-scheduler(client);
 
 // Log in to Discord
 client.login(process.env.bot_token);
