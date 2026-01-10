@@ -5,12 +5,12 @@ dotenv.config();
 import fs from "fs";
 import path from "path";
 import { Client, Collection, Events, GatewayIntentBits, Partials } from "discord.js";
-import { createSchedule } from "./scheduler/createSchedule.js";
+
 
 // Anthony booing file
 import booing from "./event/booing.js";
 // Anthony scheduler
-
+import { createSchedule } from "./scheduler/createSchedule.js";
 
 
 // Creating instances
@@ -23,7 +23,7 @@ client.commands = new Collection();
 // Anthony event emitter for booing
 client.on(Events.MessageCreate, booing);
 
-// starts the post scheduler
+// Anthony starts the post scheduler
 createSchedule(client);
 
 // Setting up directories

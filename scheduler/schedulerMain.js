@@ -10,8 +10,7 @@ export async function scheduler(client, sheetData) {
     clearCronJobs();
     
     for (let post of sheetData){
-        // checking things
-
+        // checking validity
         if ( 
         await checkImg(post.img, post.id) === false || 
         await checkCron(post, post.id) === false || 
