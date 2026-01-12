@@ -2,15 +2,27 @@ import cron from "node-cron";
 import fs from "fs/promises";
 
 
+async function getValids(client, post){
+    const channelResult = await checkChannel(client, post.channelId, post.id);
+    const imgResult = await checkImg(post.img, post.id);
+    const cronResult = checkCron(post);
+
+    if (!channelResult.worked) return channelResult;
+    if (!imgResult.worked) return imgResult;
+    if (!cronResult.worked) return cronResult;
+
+    return { worked: true };
+};
+
+
 // checks if chan id is valid
 async function checkChannel(client, givenId, postId){
     try{
         await client.channels.fetch(givenId);
-        return true;
     } catch (err){
-        console.error(`[WARNING] Invalid channelId, post ID: ${postId}, skipping post`);
-        return false;   
+        return {worked: false, error: `[WARNING] Invalid channelId, post ID: ${postId}, skipping post`};
     }
+return { worked: true };
 
 };
 
@@ -20,13 +32,13 @@ async function checkImg(postImg, postId) {
     for (const imgPath of imgPaths){
         try {
             await fs.access(imgPath);
-            continue;
+
         } catch (err) {
-            console.error(`[WARNING] Invalid img path, post ID: ${postId}, skipping post`);
-            return false;
+            return {worked: false, error: `[WARNING] Invalid img path, post ID: ${postId}, skipping post`};
+
         }
     }
-    return true;
+    return { worked: true };
 };
 
 
@@ -35,14 +47,14 @@ function checkCron(post){
 
     // Skip invalid crons
     if (!cronExpr || !cron.validate(cronExpr)) {
-        console.warn(`[WARNING] Invalid dateTime (cron), post ID: ${post.id}, skipping post`);
-        return false;
+        return {worked: false, error: `[WARNING] Invalid dateTime (cron), post ID: ${post.id}, skipping post`};
     }
+    return { worked: true };
 };
 
 
 export {
-    checkChannel,
-    checkImg,
-    checkCron
+
+    getValids
+
 }

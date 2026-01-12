@@ -10,6 +10,8 @@ export async function loadPostsFromSheet() {
     // originally used published csv, now using export link for more instant updates
     const sheetId = "189MnqmH0EpeLxNmhlmkt6CsfL0Te3sZQhBP8l5bjim4"
     const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
+    // sheets page 2
+    // const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=833757815#gid=833757815`;
     const res = await fetch(url);
 
     // convert response(csv file) into text
@@ -48,42 +50,4 @@ export async function createSchedule(client) {
     let sheetData = await loadPostsFromSheet();
     await scheduler(client, sheetData);
 };
-
-
-
-
-
-
-
-// OLD
-    // Template
-
-    // XX NAME XX
-        // {
-        // id: 0,
-        // channelId: mainChannel,
-        // datetime: "* * * * *",
-        // msg: "",
-        // img: "",
-        // ping: "",
-        // loaded: false
-        // },
-
-    // for ref: "* * * * *" min(0-59), hour(0-23), day(1-31), month(1-12), year, * = every
-
-    // export let testInfo =  [
-        
-    //     // img msg ping
-    //     {
-    //     id: 1,
-    //     channelId: mainChannel,
-    //     datetime: "* * * * *",
-    //     msg: "--==❃❃❃❃❃❃__**ᗰƐŔŔY ƇĤŔĪSƬᗰᗩS**__❃❃❃❃❃❃==--",
-    //     img: "./imports/Wolf-Scheduler/Wolf-Pics/Hale_1.jpg",
-    //     ping: "@here",
-    //     loaded: false
-    //     },
-        
-    // ];
-
 

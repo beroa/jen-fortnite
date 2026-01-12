@@ -1,7 +1,7 @@
 import cron from "node-cron";
 import { AttachmentBuilder } from "discord.js";
 import { clearCronJobs } from "./clearCronJobs.js";
-import { checkCron, checkImg, checkChannel } from "./checkValidity.js";
+import { getValids } from "./checkValidity.js";
 
 
 // schedules posts
@@ -11,11 +11,11 @@ export async function scheduler(client, sheetData) {
     
     for (let post of sheetData){
         // checking validity
-        if ( 
-        await checkImg(post.img, post.id) === false || 
-        await checkCron(post, post.id) === false || 
-        await checkChannel(client, post.channelId, post.id) === false){
-            continue;
+        const validity = await getValids(client, post);
+
+        if (!validity.worked) {
+            console.warn(validity.error);
+            continue; // skip this post
         }
 
         // schedule the post
@@ -41,13 +41,13 @@ export async function scheduler(client, sheetData) {
                 const msgs  = Array.isArray(post.msg)  ? post.msg  : post.msg  ? [post.msg]  : [];
                 const pings = Array.isArray(post.ping) ? post.ping : post.ping ? [post.ping] : [];
 
-                // checking msgs
+                // if msgs
                 if (post.msg) {
                     for (const msg of msgs){
                         await channel.send({ content: msg });
                     }
                 }
-                // checking pings
+                // if pings
                 if (post.ping){
                     for (const ping of pings){
                         await channel.send({ content: ping });

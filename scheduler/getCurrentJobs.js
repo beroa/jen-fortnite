@@ -1,6 +1,6 @@
 // import { currentJobs } from "./schedulerMain.js";
 import { loadPostsFromSheet } from "./createSchedule.js";
-import { checkChannel, checkImg } from "./checkValidity.js";
+import { getValids } from "./checkValidity.js";
 
 export async function getCurrentJobs(client) {
 
@@ -8,9 +8,9 @@ export async function getCurrentJobs(client) {
     let errJobs = [];
     let posts = await loadPostsFromSheet();
     for (let post of posts){
-        // check channel Id is valid
-        if (await checkChannel(client, post.channelId, post.id) === true 
-            && await checkImg(post.img, post.id) === true){ 
+        // check channel Id/ img is valid
+        const validity = await getValids(client, post);
+        if (validity.worked === true){ 
             currentJobs.push(post.id);
         } else {
             errJobs.push(post.id);
