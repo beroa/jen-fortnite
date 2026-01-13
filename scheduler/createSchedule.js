@@ -9,9 +9,10 @@ import { scheduler } from "./schedulerMain.js";
 export async function loadPostsFromSheet() {
     // originally used published csv, now using export link for more instant updates
     const sheetId = "189MnqmH0EpeLxNmhlmkt6CsfL0Te3sZQhBP8l5bjim4"
-    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
-    // sheets page 2
-    // const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=833757815#gid=833757815`;
+    // test data VVV
+    // const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
+    // actual data VVV
+    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=833757815#gid=833757815`;
     const res = await fetch(url);
 
     // convert response(csv file) into text
