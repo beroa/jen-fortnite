@@ -1,10 +1,12 @@
-// Importing necessary modules and initializing dotenv
-import dotenv from "dotenv";
-dotenv.config();
-
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
+import dotenv from "dotenv";
 import { Client, Collection, Events, GatewayIntentBits, Partials } from "discord.js";
+
+// Always load .env from this project directory, regardless of current working directory.
+const dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.join(dirname, ".env") });
 
 // Anthony booing file
 import booing from "./event/booing.js";
@@ -21,7 +23,6 @@ client.commands = new Collection();
 client.on(Events.MessageCreate, booing);
 
 // Setting up directories
-const dirname = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Za-z]:\/)/, "$1");
 const foldersPath = path.join(dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
 
